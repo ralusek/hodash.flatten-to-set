@@ -1,6 +1,6 @@
 {
   "name": "hodash.flatten-to-set",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Flattens an Array/Set. All children which implement .forEach will be flattened into output, alongside non-iterables.",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,5 @@
   ],
   "author": "Tomas Savigliano",
   "license": "ISC",
-  "dependencies": {
-  }
+  "dependencies": {}
 }
