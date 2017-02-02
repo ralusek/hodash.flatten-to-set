@@ -1,5 +1,5 @@
 {
-  "name": "hodash.flattenToSet",
+  "name": "hodash.flattentoset",
   "version": "1.0.0",
   "description": "Flattens an Array/Set. All children which implement .forEach will be flattened into output, alongside non-iterables.",
   "main": "index.js",
