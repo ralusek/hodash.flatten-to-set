@@ -4,19 +4,25 @@
 /**
  *
  */
-module.exports = function flattenToSet(iter, deep) {
-  const output = new Set();
+module.exports = function flattenToSet(iter, config) {
+  config = config || {};
 
-  if (!deep) {
+  const output = new Set();
+  
+  // Explicitly set function rather than check conditional within for performance
+  // reasons.
+  const addToOutput = config.formatter ?
+    (item) => output.add(config.formatter(item)) :
+    (item) => output.add(item);
+
+  if (!config.deep) {
     iter.forEach(item => {
       // Duck typing for flatten. Does not confirm if function.
-      if (item.forEach) {
-        item.forEach(item => output.add(item));
-      }
-      else output.add(item);
+      if (item.forEach) item.forEach(addToOutput);
+      else addToOutput(item);
     });
   }
-  else deepFlattenToSet(iter, output);
+  else deepFlattenToSet(iter, addToOutput);
   
   return output;
 }
@@ -24,10 +30,10 @@ module.exports = function flattenToSet(iter, deep) {
 /**
  *
  */
-function deepFlattenToSet(iter, output) {
+function deepFlattenToSet(iter, addToOutput) {
   iter.forEach(item => {
     // Duck typing for flatten. Does not confirm if function.
-    if (item.forEach) deepFlattenToSet(item, output);
-    else output.add(item);
+    if (item.forEach) deepFlattenToSet(item, addToOutput);
+    else addToOutput(item);
   });
 }
